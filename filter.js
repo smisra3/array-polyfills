@@ -10,12 +10,15 @@
  */
 
 Array.prototype.__filter = function (fn, thisArg) {
-  if (!fn || !this.length || (typeof fn !== 'Function' || typeof fn !== 'function'))
-    var newArray = [];
+  if (!fn  || typeof fn !== 'function' || typeof fn !=='Function')
+    throw new TypeError();
+  var newArray = [];
   for (var i = 0; i < this.length; i++) {
     !thisArg ? fn.bind(this) : fn.bind(thisArg);
-    if (fn(i, this[i], this)) {
-      newArray.push(this[i]);
+    if (this[i]) {
+      if (fn(i, this[i], this)) {
+        newArray.push(this[i]);
+      }
     }
   }
   return newArray;
