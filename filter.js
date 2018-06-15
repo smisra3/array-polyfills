@@ -8,8 +8,10 @@
  * @returns {Array} An empty array or the new filtered array. 
  */
 
-Array.prototype.__filter = function (fn) {
-  if (!fn || !this.length)
+Array.prototype.__filter = function (fn, thisArg) {
+  if (thisArg)
+    this = thisArg;
+  if (!fn || !this.length || typeof fn !== 'Function' || typeof fn !== 'function')
     return this;
   var newArray = [];
   for (let i = 0; i < this.length; i++) {
