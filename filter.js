@@ -9,12 +9,10 @@
  */
 
 Array.prototype.__filter = function (fn, thisArg) {
-  if (thisArg)
-    this = thisArg;
-  if (!fn || !this.length || typeof fn !== 'Function' || typeof fn !== 'function')
-    return this;
-  var newArray = [];
-  for (let i = 0; i < this.length; i++) {
+  if (!fn || !this.length || (typeof fn !== 'Function' || typeof fn !== 'function'))
+    var newArray = [];
+  for (var i = 0; i < this.length; i++) {
+    !thisArg ? fn.bind(this) : fn.bind(thisArg);
     if (fn(i, this[i], this)) {
       newArray.push(this[i]);
     }
