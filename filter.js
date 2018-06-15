@@ -10,7 +10,7 @@
  */
 
 Array.prototype.__filter = function (fn, thisArg) {
-  if (!fn  || typeof fn !== 'function' || typeof fn !=='Function')
+  if (!fn || typeof fn !== 'function')
     throw new TypeError();
   var newArray = [];
   for (var i = 0; i < this.length; i++) {
