@@ -1,0 +1,19 @@
+{
+  "name": "array-polyfills",
+  "version": "1.0.0",
+  "description": "fallbacks for all array methods",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smisra3/array-polyfills.git"
+  },
+  "author": "Shubhankar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/smisra3/array-polyfills/issues"
+  },
+  "homepage": "https://github.com/smisra3/array-polyfills#readme"
+}
