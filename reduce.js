@@ -1,25 +1,24 @@
 /**
- *This method is a polyfill for Array.prototype.reduce which returns the same array when the predicate function is not 
-  passed or when the array lenght is zero, othrwise a filtered array is returned according to the predicate. It does
-  not modify the original array.
-  The order in which the params to the predicate function is to be passed is as follows: (index, element, array), where
-  index is current index of the element being iterated and array is the array on which the __filter is called.  
+ *This method is a polyfill for Array.prototype.reduce.
+  The order in which the params to the predicate function is to be passed is as follows: (accumulator, currentValue, currentIndex, array).
  * @param {Function} fn Is the predicate function used to check for the condition to filter.
- * @param {Object} thisArg Is the optional this argument passed to call the predicate function with a different this value.
- * @returns {Array} An empty array or the new filtered array. 
+ * @param {Object} accumulator Is the optional accumulator value passed to the reduce method. If this is not passed then the
+ * first value of the array is set as the accumulator and currentValue begins from the second element. 
+ * @param {Object} thisArg Is the optional this argument passed to the callback function with a different this value.
+ * @returns {Object} Accumulator value on the basis of the callback's functionality.
  */
-Array.prototype.__reduce = function (fn, accumulator) {
-    let startIndex;
-    if (!fn || typeof fn !== 'function' || !this.length)
-        throw new TypeError();
-    return this.length === 1 && !accumulator ? this[0] : (accumulator && !this.length ? accumulator : false)
-    !accumulator ? (accumulator = this[0], startIndex = 1) : startIndex = 0;
-    for (var i = startIndex; i < this.length; i++) {
-        accumulator = fn(accumulator, this[i], i, this)
-    }
-    return accumulator;
+Array.prototype.__reduce = function (fn, accumulator, thisArg) {
+  let startIndex,
+    singleValue;
+  if (!fn || typeof fn !== 'function')
+    throw new TypeError();
+  singleValue = this.length === 1 && !accumulator ? this : (accumulator && !this.length ? accumulator : false);
+  if (singleValue)
+    return singleValue;
+  thisArg ? fn.bind(thisArg) : fn.bind(this);
+  accumulator === undefined || accumulator === null ? (accumulator = this[0], startIndex = 1) : startIndex = 0;
+  for (var i = startIndex; i < this.length; i++) {
+    accumulator = fn(accumulator, this[i], i, this);
+  }
+  return accumulator;
 }
-
-var a = [1, 2, 3, 4, 5];
-var sum = a.__reduce((accumulator, currentValue) => accumulator * currentValue, 1)
-console.log(sum);
