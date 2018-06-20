@@ -13,11 +13,13 @@ Array.prototype.__filter = function (fn, thisArg) {
   if (!fn || typeof fn !== 'function')
     throw new TypeError();
   var newArray = [];
-  for (var i = 0; i < this.length; i++) {
-    !thisArg ? fn.bind(this) : fn.bind(thisArg);
-    if (this[i]) {
-      if (fn(i, this[i], this)) {
-        newArray.push(this[i]);
+  for (let index in this) {
+    if (thisArg) {
+      fn.bind(thisArg);
+    }
+    if (this[index]) {
+      if (fn(index, this[index], this)) {
+        newArray.push(this[index]);
       }
     }
   }

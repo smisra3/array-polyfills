@@ -12,10 +12,12 @@ Array.prototype.__map = function (fn, thisArg) {
   if (!fn || typeof fn !== 'function')
     throw new TypeError();
   var newArr = [];
-  !thisArg ? fn.bind(this) : fn.bind(thisArg);
-  for (var i = 0; i < this.length; i++) {
-    if (this[i] || typeof this[i] == 'undefined') {
-      newArr.push(fn(i, this[i], this));
+  if (thisArg) {
+    fn.bind(thisArg);
+  }
+  for (let index in this) {
+    if (this[index] || typeof this[index] == 'undefined') {
+      newArr.push(fn(i, this[index], this));
     }
   }
   return newArr;

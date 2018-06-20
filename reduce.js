@@ -15,7 +15,9 @@ Array.prototype.__reduce = function (fn, accumulator, thisArg) {
   singleValue = this.length === 1 && !accumulator ? this : (accumulator && !this.length ? accumulator : false);
   if (singleValue)
     return singleValue;
-  thisArg ? fn.bind(thisArg) : fn.bind(this);
+  if (thisArg) {
+    fn.bind(thisArg);
+  }
   accumulator === undefined || accumulator === null ? (accumulator = this[0], startIndex = 1) : startIndex = 0;
   for (var i = startIndex; i < this.length; i++) {
     accumulator = fn(accumulator, this[i], i, this);
